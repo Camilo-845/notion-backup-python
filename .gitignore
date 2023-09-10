@@ -17,3 +17,7 @@ env.bak/
 venv.bak/
 
 .DS_Store
+
+notionbackup*/
+
+errorLogs/
