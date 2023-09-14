@@ -4,7 +4,7 @@ from src import *
 
 timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 folder = '../backups/notionbackup_' + timestamp
-
+dataBaseID = "731d20d7-7815-4dac-806e-bef4654f2467"
 
 headers = {
   'Authorization': 'Bearer secret_lpa4riCCDmZuURvr2GgsQVtkAIXRlVk8M77OpYO5KJm',
@@ -12,4 +12,4 @@ headers = {
   'Content-Type': 'application/json',
 }
 
-makeBackup(folder, headers)
+makeBackup(folder, headers,dataBaseID)
