@@ -6,18 +6,21 @@ from .catchError import *
 
 def getPage(pageId,headers,errorsLogsfolder):
     try:
-        response =requests.post(f'https://api.notion.com/v1/pages/{pageId}', headers=headers)
+        response =requests.get(f'https://api.notion.com/v1/pages/{pageId}', headers=headers)
         return response.json()
     except Exception as err:
         response = {"Type": type(err) ,"Error": err.args}
         saveError(errorsLogsfolder, response)
+#def mapPrecioUnitario(data)
+    
+#def mapProducto(data)
 
-def mapByData(key,data):
+def mapByData(key,data,headers,errorsLogsfolder):
     dataType = data["type"]
     if(dataType == "number"):
         return data["number"]
     elif (dataType=="formula"):
-        return mapByData(key,data["formula"])
+        return mapByData(key,data["formula"],headers,errorsLogsfolder)
     elif (dataType=="status"):
         return data["status"]["name"]
     elif (dataType=="checkbox"):
@@ -28,6 +31,10 @@ def mapByData(key,data):
         if(key=="Cliente"):
             for d in data["relation"]:
                 return d["id"]
+        elif(key =="Producto"):
+            for d in data["relation"]:
+                pageData =getPage(d["id"],headers,errorsLogsfolder)
+                return mapByData(key,pageData['properties']["Nombre"],headers,errorsLogsfolder)
         else:
             for d in data["relation"]:
                 return d["id"]
@@ -35,22 +42,25 @@ def mapByData(key,data):
         if (len(data["rich_text"])==0):
             return ""
         else:
-            return mapByData(key,data["rich_text"][0])
+            return mapByData(key,data["rich_text"][0],headers,errorsLogsfolder)
     elif (dataType=="date"):
         if(data["date"]):
             return data["date"]["start"]
         else:
             return data["date"]
+    elif (dataType=="title"):
+        for d in data["title"]:
+            return mapByData(key,d,headers,errorsLogsfolder)
     else:
         return "otro dato"
 
-def mapResponse(data):
+def mapResponse(data,headers,errorsLogsfolder):
     mainData = []
     print(len(data))
     for element in data:
         mapData = {}
         for key,val in element["properties"].items():
-            mapData[key] = mapByData(key,val)
+            mapData[key] = mapByData(key,val,headers,errorsLogsfolder)
         mainData.append(mapData)
     return mainData
 
@@ -72,7 +82,7 @@ def makeBackup(folder,headers, dataBaseID):
                    # results = json.dumps(response.json())
                     print (type(response.json()["results"]))
                     
-                    results = mapResponse(response.json()["results"])
+                    results = mapResponse(response.json()["results"],headers,errorsLogsfolder)
                     file.write(json.dumps(results)[1:-1]+",")
 
                 if(not response.json()['has_more']):
