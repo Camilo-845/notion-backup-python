@@ -1,4 +1,76 @@
 {
-  "users": [],
-  "products": []
+  "users": [
+    { "id": "0d22fc42-dd1b-42d0-8e9a-c75f30e6cb41", "name": "Andrea" },
+    {
+      "id": "8c45685e-8439-493c-b18a-2d7af0e057ca",
+      "name": "Se\u00f1ora Lurdes"
+    },
+    { "id": "0c3bad09-db14-4a31-86d7-3ffb54fd6b14", "name": "Sra. Ide" },
+    { "id": "228e79f5-5f56-4007-be7b-1be3a10965ee", "name": "Sra. Bety" },
+    { "id": "1508b1f1-a17e-4b9b-896a-a1731265f053", "name": "Alcides" },
+    { "id": "dff5089c-c9e2-44e7-b6b3-07873c86d07e", "name": "Tomas" },
+    { "id": "68fb8e6b-04fe-4d84-8ba5-91f33b7e3ee6", "name": "David Acosta" },
+    { "id": "e650e244-b467-4a78-a0f3-59ab7a62e4b7", "name": "Antonio" },
+    {
+      "id": "046ffdcb-9bc0-4cff-acc3-dd6d8ba2e1e3",
+      "name": "Enfermera Laboratorio"
+    },
+    { "id": "688f241b-ecde-464b-b937-696f65f4d933", "name": "Oscar" },
+    { "id": "91873fcb-3f3e-40e4-bc28-db103e0e20c6", "name": "Carlos" },
+    { "id": "b102cb0c-2884-4c5d-8631-acf85569aa62", "name": "Dra. Edna" },
+    { "id": "1e9f366b-2a01-4f6d-975f-7e75f215191f", "name": "Cristina" },
+    { "id": "38d1bd7d-e9fc-4825-a978-f8b76af18f01", "name": "Wendy" },
+    { "id": "b811f1f5-3530-4c30-b52f-1482ef8a4b26", "name": "Jefe Daira" }
+  ],
+  "products": [
+    { "id": "11ab8d23-c94a-4e1d-b839-e1c9d5e100df", "name": "No identificado" },
+    {
+      "id": "c2457043-fef4-4c35-a168-8a7e5ca15e0b",
+      "name": "Cigarrillo L&M x media caja"
+    },
+    { "id": "f1727184-8fb1-4d0e-991c-b23822e8e399", "name": "Pan Tajado Lalo" },
+    {
+      "id": "41963e16-8a59-4f1e-ad70-d632fa7b0add",
+      "name": "Cocacola x 1L - Retornable"
+    },
+    {
+      "id": "01edfaf3-4139-43c0-9308-17c3ffef56b7",
+      "name": "Agua manzana x 250ml"
+    },
+    {
+      "id": "4ac4d56d-2582-41c8-b809-36fcc2f3e291",
+      "name": "Cigarrillo electr\u00f3nico HITS"
+    },
+    {
+      "id": "4db2cbb5-1975-4b78-a5d0-ebac3b1d1eb6",
+      "name": "Pudin Ramo x unidad"
+    },
+    {
+      "id": "418178bf-a832-4636-be6e-f7ee1508e9d3",
+      "name": "Agua de manzana x 600 ml"
+    },
+    { "id": "86024540-68ce-41b5-a633-238c01a7b254", "name": "Gelatina vogui" },
+    {
+      "id": "6d568930-cb40-40f5-909d-649d36789de3",
+      "name": "Salchich\u00f3n cervecero "
+    },
+    {
+      "id": "79683b9e-5da2-466e-8cbe-ecdbc419f3c4",
+      "name": "Colacola x 225ml"
+    },
+    {
+      "id": "9618d0f3-5df2-4c4f-9e4c-7804491be68d",
+      "name": "Tinto peque\u00f1o Termo"
+    },
+    {
+      "id": "bad72a43-9301-4888-bc43-cf64bbe47d20",
+      "name": "Empanada / dedito / horneadl"
+    },
+    {
+      "id": "7c4df07d-7879-4d2f-8969-f1cbb5775221",
+      "name": "Huevo por unidad"
+    },
+    { "id": "40434409-6c94-4245-b331-74081a23d521", "name": "Pila AAA" },
+    { "id": "b6585c9c-f0e8-4ba4-9509-88ddc0e25c27", "name": "Atun VatCamps" }
+  ]
 }

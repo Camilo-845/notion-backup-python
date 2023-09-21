@@ -3,6 +3,7 @@ import requests
 import json
 import datetime
 from .catchError import *
+from .quickGets.quickGets import *
 
 def getPage(pageId,headers,errorsLogsfolder):
     try:
@@ -30,14 +31,24 @@ def mapByData(key,data,headers,errorsLogsfolder):
     elif (dataType=="relation"):
         if(key=="Cliente"):
             for d in data["relation"]:
-                return d["id"]
+                DBData = getDataById("users",d["id"])
+                if(DBData==None):
+                    pageData =getPage(d["id"],headers,errorsLogsfolder)
+                    mapedData = mapByData(key,pageData['properties']["Nombre"],headers,errorsLogsfolder)
+                    addData("users", d["id"], mapedData)
+                    return mapedData
+                return DBData
         elif(key =="Producto"):
             for d in data["relation"]:
-                pageData =getPage(d["id"],headers,errorsLogsfolder)
-                return mapByData(key,pageData['properties']["Nombre"],headers,errorsLogsfolder)
+                DBData = getDataById("products",d["id"])
+                if(DBData==None):
+                    pageData =getPage(d["id"],headers,errorsLogsfolder)
+                    mapedData = mapByData(key,pageData['properties']["Nombre"],headers,errorsLogsfolder)
+                    addData("products", d["id"], mapedData)
+                    return mapedData
+                return DBData
         else:
-            for d in data["relation"]:
-                return d["id"]
+            return "otro dato"
     elif (dataType=="rich_text"):
         if (len(data["rich_text"])==0):
             return ""
@@ -51,6 +62,8 @@ def mapByData(key,data,headers,errorsLogsfolder):
     elif (dataType=="title"):
         for d in data["title"]:
             return mapByData(key,d,headers,errorsLogsfolder)
+    elif (dataType == "rollup"):
+        return mapByData(key, data["rollup"], headers, errorsLogsfolder)
     else:
         return "otro dato"
 
@@ -61,6 +74,17 @@ def mapResponse(data,headers,errorsLogsfolder):
         mapData = {}
         for key,val in element["properties"].items():
             mapData[key] = mapByData(key,val,headers,errorsLogsfolder)
+        if mapData.get("Precio Unico"):
+            if mapData.get("Cantidad") == None or mapData.get("Precio_unico") == None:
+                mapData["Cantidad"] = 0
+            else:
+                mapData["Total"] = mapData.get("Cantidad")*mapData.get("Precio_unico") 
+        else:
+            if mapData.get("Cantidad") == None or mapData.get("Precio_Unitario") == None:
+                mapData["Cantidad"] = 0
+            else:
+                mapData["Total"] = mapData.get("Cantidad")*mapData.get("Precio_Unitario")
+                
         mainData.append(mapData)
     return mainData
 

@@ -2,7 +2,7 @@
 import datetime
 from src import *
 
-timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
 folder = '../backups/notionbackup_' + timestamp
 dataBaseID = "731d20d7-7815-4dac-806e-bef4654f2467"
 
