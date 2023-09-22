@@ -12,9 +12,6 @@ def getPage(pageId,headers,errorsLogsfolder):
     except Exception as err:
         response = {"Type": type(err) ,"Error": err.args}
         saveError(errorsLogsfolder, response)
-#def mapPrecioUnitario(data)
-    
-#def mapProducto(data)
 
 def mapByData(key,data,headers,errorsLogsfolder):
     dataType = data["type"]
@@ -69,7 +66,7 @@ def mapByData(key,data,headers,errorsLogsfolder):
 
 def mapResponse(data,headers,errorsLogsfolder):
     mainData = []
-    print(len(data))
+    print(f'Registros: {len(data)}')
     for element in data:
         mapData = {}
         for key,val in element["properties"].items():
@@ -101,17 +98,18 @@ def makeBackup(folder,headers, dataBaseID):
         else:
             has_more = True
             open(f'{folder}/result.json', 'w').write("[")
+            i = 1
             while(has_more):
                 with open(f'{folder}/result.json', 'a') as file:
                    # results = json.dumps(response.json())
-                    print (type(response.json()["results"]))
+                    print (f'Consulta {i}...')
                     
                     results = mapResponse(response.json()["results"],headers,errorsLogsfolder)
+                    if(not response.json()['has_more']):
+                        has_more=False
+                        file.write(json.dumps(results)[1:-1])
+                        break
                     file.write(json.dumps(results)[1:-1]+",")
-
-                if(not response.json()['has_more']):
-                    has_more=False
-                    break
                 
                 params ={}
                 params["start_cursor"] = response.json().get("next_cursor")
@@ -120,25 +118,9 @@ def makeBackup(folder,headers, dataBaseID):
                     headers=headers,
                     json=params
                 )
+                i+=1
             open(f'{folder}/result.json', 'a').write("]")
-        """ for block in response.json()['results']:
-            with open(f'{folder}/{block["id"]}.json', 'w') as file:
-                file.write(json.dumps(block))
-
-            child_blocks = requests.get(
-                f'https://api.notion.com/v1/blocks/{block["id"]}/children',
-                headers=headers,
-            )
-            if child_blocks.json()['results']:
-                os.mkdir(folder + f'/{block["id"]}')
-
-                for child in child_blocks.json()['results']:
-                with open(f'{folder}/{block["id"]}/{child["id"]}.json', 'w') as file:
-                    file.write(json.dumps(child)) """
+        print("Consultas Finalizadas correctamente")
     except Exception as err:
         response = {"Type": type(err) ,"Error": err.args}
         saveError(errorsLogsfolder, response)
-
-def mapData(data):
-    print(data)
-    return data
