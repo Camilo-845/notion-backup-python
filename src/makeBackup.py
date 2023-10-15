@@ -12,6 +12,7 @@ def getPage(pageId,headers,errorsLogsfolder):
     except Exception as err:
         response = {"Type": type(err) ,"Error": err.args}
         saveError(errorsLogsfolder, response)
+        return {};
 
 def mapByData(key,data,headers,errorsLogsfolder):
     dataType = data["type"]
